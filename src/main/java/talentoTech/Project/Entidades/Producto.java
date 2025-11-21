@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class Producto{
 
-    private UUID id;
+    private Long id;
     private String _nombre;
     private String _descripcion;
     private String _categoria;
