@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import talentoTech.Project.Entidades.productos.Producto;
+import talentoTech.Project.services.OperationalCRUD;
 import talentoTech.Project.services.ProductoService;
 
 @RestController
 @RequestMapping("/products")
 class ProductoController{
 
-    private ProductoService service;
+    private OperationalCRUD<Producto> service;
     
     @GetMapping
     public ResponseEntity<?> getAll(){

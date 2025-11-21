@@ -1,0 +1,73 @@
+package talentoTech.Project.services;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Supplier;
+
+import org.jspecify.annotations.Nullable;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Service;
+
+import talentoTech.Project.Entidades.Pedido;
+import talentoTech.Project.Entidades.productos.Producto;
+import talentoTech.Project.Repository.PedidoRepository;
+
+@Service
+public class PedidoService implements IPedido {
+    
+    private PedidoRepository repository;
+
+    @Override
+    public List<Pedido> getAll(){
+        return repository.findAll();
+    }
+
+    @Override
+    public List<Producto> getAllProducts(long id){
+        Optional<Pedido> p = repository.findById(id);
+        return p.get().getProductos();
+    }
+
+    @Override
+    public Producto getOneProduct(Long id, Long idProduct){
+        Optional<Pedido> p = repository.findById(id);
+        Pedido pedido = p.orElseThrow( () -> new IllegalArgumentException("No existe ese pedido"));
+        return findProduct(pedido, idProduct);
+    }
+
+    private Producto findProduct(Pedido pedido, long id){
+        for (Producto product : pedido.getProductos()) 
+            if (product.getId() == id) 
+                return product;
+        throw new IllegalArgumentException("product not found");
+    }
+
+    @Override
+    public Pedido create(Pedido object) {
+        return repository.save(object);
+    }
+
+    @Override
+    public Pedido edit(Pedido object) {
+       return repository.save(object);
+    }
+
+    @Override
+    public Pedido delete(Long idObject) throws Exception {
+        Pedido p = repository.findById(idObject)
+        .orElseThrow(errorNotIDFoundException());
+        repository.deleteById(idObject);
+        return p;
+    }
+
+    @Override
+    public Pedido getByID(Long idObject) throws Exception {
+        return repository.findById(idObject)
+        .orElseThrow(errorNotIDFoundException());
+    }
+
+    private Supplier<Exception> errorNotIDFoundException(){
+        return () -> new IllegalArgumentException("Not found exception");
+    }
+}

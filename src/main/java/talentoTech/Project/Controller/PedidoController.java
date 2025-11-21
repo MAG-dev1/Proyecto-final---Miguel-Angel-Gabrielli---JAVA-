@@ -7,13 +7,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import talentoTech.Project.Entidades.Pedido;
+import talentoTech.Project.services.IPedido;
+import talentoTech.Project.services.OperationalCRUD;
 import talentoTech.Project.services.PedidoService;
 
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
     
-    private PedidoService servicio;
+    private IPedido servicio;
 
     @GetMapping
     public ResponseEntity<?> getAll(){
@@ -26,7 +29,7 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getByID(@PathVariable long id){
-        return ResponseEntity.ok(servicio.get(id));
+    public ResponseEntity<?> getByID(@PathVariable long id) throws Exception{
+        return ResponseEntity.ok(servicio.getByID(id));
     }
 }

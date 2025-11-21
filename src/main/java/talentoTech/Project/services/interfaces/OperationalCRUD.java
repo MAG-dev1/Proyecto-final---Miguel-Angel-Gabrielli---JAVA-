@@ -1,4 +1,4 @@
-package talentoTech.Project.services;
+package talentoTech.Project.services.interfaces;
 
 import java.util.List;
 
