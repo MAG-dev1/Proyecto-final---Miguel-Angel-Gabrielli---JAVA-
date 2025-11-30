@@ -1,15 +1,15 @@
-package talentoTech.Project.Entidades.productos;
+package talentoTech.Project.Entidades.users;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.With;
 
 @Entity
-@Table(name = "short")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Short extends Producto {
-   
-    private boolean verticalLines;
+@Table(name = "admin")
+public class Admin extends Usuario{
+    
 }

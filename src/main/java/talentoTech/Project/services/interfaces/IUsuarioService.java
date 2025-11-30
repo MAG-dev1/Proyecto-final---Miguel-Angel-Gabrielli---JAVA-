@@ -1,6 +1,6 @@
-package talentoTech.Project.services;
+package talentoTech.Project.services.interfaces;
 
-import talentoTech.Project.Entidades.Usuario;
+import talentoTech.Project.Entidades.users.Usuario;
 
 public interface IUsuarioService extends OperationalCRUD<Usuario> {
     String revocar(long idUsuario);

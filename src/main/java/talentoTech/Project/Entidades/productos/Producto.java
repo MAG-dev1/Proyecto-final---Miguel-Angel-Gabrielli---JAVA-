@@ -7,11 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+
 @Data
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Producto{
 
     @Id
@@ -24,6 +26,8 @@ public abstract class Producto{
     private String _url;
     private Integer _stock;
     private Double precio;
+    private String color;
+    private Integer quality; // 1, 2 and 3
 
     
    

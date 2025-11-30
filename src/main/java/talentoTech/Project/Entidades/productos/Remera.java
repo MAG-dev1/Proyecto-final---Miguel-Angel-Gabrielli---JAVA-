@@ -8,9 +8,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "remera")
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true)      
 public class Remera extends Producto{
     
-    private Integer quality; // 1, 2 and 3
+
     private String fabricType; //cotton, polyester, blends
 }

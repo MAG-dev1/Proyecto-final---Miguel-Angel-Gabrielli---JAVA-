@@ -1,4 +1,4 @@
-package talentoTech.Project.services;
+package talentoTech.Project.services.servicios;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,14 +9,17 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import lombok.Data;
 import talentoTech.Project.Entidades.Pedido;
 import talentoTech.Project.Entidades.productos.Producto;
 import talentoTech.Project.Repository.PedidoRepository;
+import talentoTech.Project.services.interfaces.IPedidoService;
 
 @Service
-public class PedidoService implements IPedido {
+@Data
+public class PedidoService implements IPedidoService {
     
-    private PedidoRepository repository;
+    private final PedidoRepository repository;
 
     @Override
     public List<Pedido> getAll(){
@@ -49,7 +52,7 @@ public class PedidoService implements IPedido {
     }
 
     @Override
-    public Pedido edit(Pedido object) {
+    public Pedido edit(Long id, Pedido object) {
        return repository.save(object);
     }
 

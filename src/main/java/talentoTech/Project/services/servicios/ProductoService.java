@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 
 import lombok.Data;
 import talentoTech.Project.Entidades.productos.Producto;
+import talentoTech.Project.Entidades.productos.Remera;
 import talentoTech.Project.Repository.ProductoRepository;
 import talentoTech.Project.services.interfaces.OperationalCRUD;
-
+import talentoTech.Project.Entidades.productos.Short;
 @Data
 @Service
 public class ProductoService implements OperationalCRUD<Producto>{
 
-    private ProductoRepository productos;
+    private final ProductoRepository productos;
 
     @Override
     public Producto getByID(Long idObject) throws Exception{
@@ -28,11 +29,11 @@ public class ProductoService implements OperationalCRUD<Producto>{
 
     @Override
     public Producto create(Producto object) {
-       return productos.save(object);
+        return productos.save(object);
     }
 
     @Override
-    public Producto edit(Producto object) {
+    public Producto edit(Long id, Producto object) {
         return productos.save(object);
     }
 

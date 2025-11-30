@@ -1,22 +1,20 @@
 package talentoTech.Project.Controller;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import talentoTech.Project.Entidades.Pedido;
-import talentoTech.Project.services.IPedido;
-import talentoTech.Project.services.OperationalCRUD;
-import talentoTech.Project.services.PedidoService;
+import lombok.Data;
+import talentoTech.Project.services.interfaces.IPedidoService;
 
 @RestController
 @RequestMapping("/pedidos")
+@Data
 public class PedidoController {
     
-    private IPedido servicio;
+    private final IPedidoService servicio;
 
     @GetMapping
     public ResponseEntity<?> getAll(){
@@ -24,12 +22,19 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}/products")
-    public ResponseEntity<?> getAllProducts(@PathVariable Long id){
+    public ResponseEntity<?> getAllProductsFromThisPedido(@PathVariable Long id){
         return ResponseEntity.ok(servicio.getAllProducts(id));
+    }
+
+    @GetMapping("/{id}/products/{idProduct}")
+    public ResponseEntity<?> getOneProduct(@PathVariable Long id, @PathVariable Long idProduct){
+         return ResponseEntity.ok(servicio.getOneProduct(id, idProduct));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getByID(@PathVariable long id) throws Exception{
         return ResponseEntity.ok(servicio.getByID(id));
     }
+
+
 }

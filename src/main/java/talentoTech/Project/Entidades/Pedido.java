@@ -13,6 +13,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import talentoTech.Project.Entidades.productos.Producto;
+import talentoTech.Project.Entidades.users.Cliente;
+import talentoTech.Project.Entidades.users.Usuario;
 
 @Entity
 public class Pedido {
@@ -27,7 +29,7 @@ public class Pedido {
 
 
     @ManyToOne
-    private Usuario user;
+    private Cliente user;
 
     public List<Producto> getProductos() {
         return productos;
