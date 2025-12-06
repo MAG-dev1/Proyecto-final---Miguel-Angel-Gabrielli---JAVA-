@@ -37,7 +37,7 @@ public class UsuarioController {
          return ResponseEntity.ok(service.create(user));
     }
     @PutMapping("/{id}")
-    public  ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Cliente user){
+    public  ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Cliente user) throws Exception{
         return ResponseEntity.ok(service.edit(id, user));
     }
 

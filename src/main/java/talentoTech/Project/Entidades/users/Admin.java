@@ -10,6 +10,15 @@ import lombok.With;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "admin")
-public class Admin extends Usuario{
+public class Admin extends Usuario{@Override
+    public UsuarioDTO toDTO() {
+        
+        return AdminDTO
+        .builder()
+        .username(getUsername())
+        .password(getPassword())
+        .build();
+    }
+    
     
 }

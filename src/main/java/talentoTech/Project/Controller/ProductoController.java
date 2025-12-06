@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.Data;
 import talentoTech.Project.Entidades.productos.Producto;
+import talentoTech.Project.Entidades.productos.ProductoDTO;
 import talentoTech.Project.Entidades.productos.Remera;
+import talentoTech.Project.services.interfaces.IProductoService;
 import talentoTech.Project.services.interfaces.OperationalCRUD;
 import talentoTech.Project.services.servicios.ProductoService;
 
@@ -23,7 +25,7 @@ import talentoTech.Project.services.servicios.ProductoService;
 @Data
 class ProductoController{
 
-    private final OperationalCRUD<Producto> service;
+    private final IProductoService service;
     
     @GetMapping
     public ResponseEntity<?> getAll(){
@@ -40,7 +42,7 @@ class ProductoController{
          return ResponseEntity.ok(service.create(product));
     }
     @PutMapping("/{id}")
-    public  ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Remera product){
+    public  ResponseEntity<?> edit(@PathVariable Long id, @RequestBody Remera product) throws Exception{
         return ResponseEntity.ok(service.edit(id, product));
     }
 

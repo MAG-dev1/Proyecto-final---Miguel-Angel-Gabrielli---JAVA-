@@ -10,49 +10,77 @@ import org.springframework.stereotype.Service;
 
 import lombok.Data;
 import talentoTech.Project.Entidades.productos.Producto;
+import talentoTech.Project.Entidades.productos.ProductoDTO;
 import talentoTech.Project.Entidades.productos.Remera;
 import talentoTech.Project.Repository.ProductoRepository;
+import talentoTech.Project.services.interfaces.IProductoService;
 import talentoTech.Project.services.interfaces.OperationalCRUD;
 import talentoTech.Project.Entidades.productos.Short;
 @Data
 @Service
-public class ProductoService implements OperationalCRUD<Producto>{
+public class ProductoService implements IProductoService{
 
     private final ProductoRepository productos;
 
     @Override
-    public Producto getByID(Long idObject) throws Exception{
+    public ProductoDTO getByID(Long idObject) throws Exception{
        Producto p = productos.findById(idObject)
        .orElseThrow(errorNotIDFoundException());
-        return p;
+        return p.toDTO();
     }
 
     @Override
-    public Producto create(Producto object) {
-        return productos.save(object);
+    public ProductoDTO create(Producto object) {
+        return productos.save(object).toDTO();
     }
 
     @Override
-    public Producto edit(Long id, Producto object) {
-        return productos.save(object);
+    public ProductoDTO edit(Long id, Producto object) throws Exception {
+        Producto p = productos.findById(id)
+        .orElseThrow(errorNotIDFoundException());
+
+        if (object instanceof Remera) {
+            p.setNombre(object.getNombre());
+            p.setDescripcion(object.getDescripcion());
+            p.setCategoria(object.getCategoria());
+            p.setUrl(object.getUrl());
+            p.setStock(object.getStock());
+            p.setPrecio(object.getPrecio());
+            p.setColor(object.getColor());
+            p.setQuality(object.getQuality());
+            ((Remera)object).setFabricType(((Remera)object).getFabricType());
+        }
+        return productos.save(p).toDTO();
     }
 
     @Override
-    public List<Producto> getAll() {
-        return productos.findAll();
+    public List<ProductoDTO> getAll() {
+        return productos
+        .findAll()
+        .stream()
+        .map(e -> e.toDTO())
+        .toList();
     }
 
     @Override
-    public Producto delete(Long idObject) throws Exception {
+    public ProductoDTO delete(Long idObject) throws Exception {
         Producto p = productos.findById(idObject)
         .orElseThrow(errorNotIDFoundException());
         productos.deleteById(idObject);
-        return p;
+        return p.toDTO();
     }
 
     private Supplier<Exception> errorNotIDFoundException(){
         return () -> new IllegalArgumentException("Not found exception");
     }
 
+    Producto getProducts(long id){
+        try {
+            return productos.findById(id).orElseThrow(errorNotIDFoundException());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

@@ -1,12 +1,21 @@
 package talentoTech.Project.Controller;
 
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.Data;
+import talentoTech.Project.Entidades.Pedido;
+import talentoTech.Project.Entidades.PedidoRequest;
+import talentoTech.Project.Entidades.productos.Producto;
 import talentoTech.Project.services.interfaces.IPedidoService;
 
 @RestController
@@ -34,6 +43,23 @@ public class PedidoController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getByID(@PathVariable long id) throws Exception{
         return ResponseEntity.ok(servicio.getByID(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody PedidoRequest pedido) throws Exception{
+        List<Producto> procs = servicio.localizarProductos(pedido.productosIds()); 
+        Pedido p = Pedido
+        .builder()
+        .productos(procs)
+        .user(servicio.localizarCliente(pedido.userId()))
+        .build();
+
+        return ResponseEntity.ok(servicio.create(p));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePedido(@PathVariable Long id) throws Exception{
+        return ResponseEntity.ok(servicio.delete(id));
     }
 
 

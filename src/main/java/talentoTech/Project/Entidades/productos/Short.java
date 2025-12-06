@@ -12,4 +12,20 @@ import lombok.EqualsAndHashCode;
 public class Short extends Producto {
    
     private boolean verticalLines;
+
+    @Override
+    public ProductoDTO toDTO() {
+        return ShortDTO
+        .builder()
+        ._nombre(getNombre())
+        ._descripcion(getDescripcion())
+        ._categoria(getCategoria())
+            ._url(getUrl())
+            .stock(getStock())
+            .precio(getPrecio())
+            .color(getColor())
+            .quality(getQuality())
+            .verticalLines(isVerticalLines())
+            .build();
+    }
 }

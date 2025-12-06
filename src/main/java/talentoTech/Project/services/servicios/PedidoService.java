@@ -1,5 +1,6 @@
 package talentoTech.Project.services.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.Data;
 import talentoTech.Project.Entidades.Pedido;
+import talentoTech.Project.Entidades.PedidoDTO;
 import talentoTech.Project.Entidades.productos.Producto;
+import talentoTech.Project.Entidades.users.Cliente;
 import talentoTech.Project.Repository.PedidoRepository;
 import talentoTech.Project.services.interfaces.IPedidoService;
 
@@ -20,10 +23,16 @@ import talentoTech.Project.services.interfaces.IPedidoService;
 public class PedidoService implements IPedidoService {
     
     private final PedidoRepository repository;
+    private final ProductoService servicioProducto;
+    private final UsuarioService servicioUsuario;
 
     @Override
-    public List<Pedido> getAll(){
-        return repository.findAll();
+    public List<PedidoDTO> getAll(){
+        return repository
+        .findAll()
+        .stream()
+        .map(Pedido::toDTO)
+        .toList();
     }
 
     @Override
@@ -47,30 +56,54 @@ public class PedidoService implements IPedidoService {
     }
 
     @Override
-    public Pedido create(Pedido object) {
-        return repository.save(object);
+    public PedidoDTO create(Pedido object) {
+        return repository.save(object).toDTO();
     }
 
     @Override
-    public Pedido edit(Long id, Pedido object) {
-       return repository.save(object);
+    public PedidoDTO edit(Long id, Pedido object) {
+       return repository.save(object).toDTO();
     }
 
     @Override
-    public Pedido delete(Long idObject) throws Exception {
+    public PedidoDTO delete(Long idObject) throws Exception {
         Pedido p = repository.findById(idObject)
         .orElseThrow(errorNotIDFoundException());
         repository.deleteById(idObject);
-        return p;
+        return p.toDTO();
     }
 
     @Override
-    public Pedido getByID(Long idObject) throws Exception {
+    public PedidoDTO getByID(Long idObject) throws Exception {
         return repository.findById(idObject)
-        .orElseThrow(errorNotIDFoundException());
+        .orElseThrow(errorNotIDFoundException())
+        .toDTO();
     }
 
     private Supplier<Exception> errorNotIDFoundException(){
         return () -> new IllegalArgumentException("Not found exception");
+    }
+
+    @Override
+    public List<Producto> localizarProductos(List<Long> productosIds) throws Exception{
+        return productosIds
+        .stream()
+        .map( (id) -> {
+
+            Producto p = servicioProducto.getProducts(id);
+            if (p == null) {
+                throw new RuntimeException("no existe un producto con id" + id);
+            }
+
+            return p;
+        
+        })
+        .toList();
+        
+    }
+
+    @Override
+    public Cliente localizarCliente(Long userId) {
+        return servicioUsuario.obtenerCliente(userId);
     }
 }

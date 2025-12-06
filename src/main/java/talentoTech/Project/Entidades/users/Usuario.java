@@ -33,6 +33,7 @@ public abstract class Usuario {
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}")
     private String password; // debe ser cifrada al momento de guardarla
     
+    public abstract UsuarioDTO toDTO();
 
 }
 

@@ -13,4 +13,19 @@ public class Remera extends Producto{
     
 
     private String fabricType; //cotton, polyester, blends
+
+    @Override
+    public ProductoDTO toDTO() {
+          return RemeraDTO.builder()
+            .nombre(getNombre())
+            .descripcion(getDescripcion())
+            .categoria(getCategoria())
+            .url(getUrl())
+            .stock(getStock())
+            .precio(getPrecio())
+            .color(getColor())
+            .quality(getQuality())
+            .fabricType(getFabricType())
+            .build();
+    }
 }

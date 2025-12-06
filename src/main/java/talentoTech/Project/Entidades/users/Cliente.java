@@ -13,4 +13,14 @@ import lombok.With;
 @Data
 public class Cliente extends Usuario {
     private Type type;
+
+    @Override
+    public UsuarioDTO toDTO() {
+        return ClienteDTO
+        .builder()
+        .username(getUsername())
+        .password(getPassword())
+        .tipo(type)
+        .build();
+    }
 }
