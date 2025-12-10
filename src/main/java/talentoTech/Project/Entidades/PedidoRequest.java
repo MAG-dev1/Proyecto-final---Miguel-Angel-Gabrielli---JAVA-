@@ -4,5 +4,7 @@ import java.util.List;
 
 public record PedidoRequest(
     List<Long> productosIds,
-    Long userId
+    List<Integer> cants,
+    Long userId,
+    String fechaEntrega
 ) {}

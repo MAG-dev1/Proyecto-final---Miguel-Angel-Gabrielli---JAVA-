@@ -74,13 +74,13 @@ public class ProductoService implements IProductoService{
         return () -> new IllegalArgumentException("Not found exception");
     }
 
-    Producto getProducts(long id){
-        try {
-            return productos.findById(id).orElseThrow(errorNotIDFoundException());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    Producto getProducts(long id) throws Exception{
+  
+        return productos
+        .findById(id)
+        .orElseThrow(errorNotIDFoundException());
+       
+       
     }
 
 }

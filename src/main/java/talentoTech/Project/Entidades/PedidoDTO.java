@@ -1,5 +1,6 @@
 package talentoTech.Project.Entidades;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.Builder;
@@ -10,7 +11,10 @@ import talentoTech.Project.Entidades.users.ClienteDTO;
 public record PedidoDTO(
 
     ClienteDTO cliente,
-    List<ProductoDTO> productos
+    List<ProductoDTO> productos,
+    LocalDate fechaCreacion,
+    LocalDate fechaEntrega,
+    String estado
      
 
 ) {

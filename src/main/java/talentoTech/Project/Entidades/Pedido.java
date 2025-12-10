@@ -1,9 +1,11 @@
 package talentoTech.Project.Entidades;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -30,35 +32,30 @@ import talentoTech.Project.Entidades.users.Usuario;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Pedido {
+public class Pedido implements IGenericDTO<PedidoDTO>{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-  @ManyToMany
-    @JoinTable(
-        name = "pedido_productos",
-        joinColumns = @JoinColumn(name = "pedido_id"),
-        inverseJoinColumns = @JoinColumn(name = "producto_id"),
-        uniqueConstraints = {
-            @UniqueConstraint(columnNames = {"pedido_id", "producto_id"})
-        }
-    )
-  private List<Producto> productos;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<ItemPedido> productos = new ArrayList<>();
 
 
     @ManyToOne
     private Cliente user;
 
-    public List<Producto> getProductos() {
-        return productos;
-    }
+    private LocalDate fechaCreacion;
+    private LocalDate fechaEntrega;
+    private String estado;
 
+  
+    @Override
     public PedidoDTO toDTO(){
 
         List<ProductoDTO> list = new ArrayList<>();
-        list.addAll(productos.stream().map((e) -> e.toDTO()).toList()); 
+        list.addAll(productos.stream().map((e) -> e.getProducto().toDTO()).toList()); 
 
         return PedidoDTO
         .builder()
@@ -66,6 +63,29 @@ public class Pedido {
         .productos(
             list
         )
+        .fechaCreacion(fechaCreacion)
+        .fechaEntrega(fechaEntrega)
+        .estado(estado)
         .build();
+    }
+
+
+    public void crearItems(List<Producto> procs, List<Integer> cants) {
+        
+        int index = 0;
+        for (Producto producto : procs) {
+            productos.add(new ItemPedido(this, producto, cants.get(index)));
+            index++;
+        }
+    }
+
+
+    public Producto[] getProductos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProductos'");
+    }
+
+    public List<Producto> getListProductos(){
+        return null;
     }
 }

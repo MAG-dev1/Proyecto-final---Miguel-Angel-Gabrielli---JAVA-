@@ -4,6 +4,7 @@ import java.util.List;
 
 import talentoTech.Project.Entidades.Pedido;
 import talentoTech.Project.Entidades.PedidoDTO;
+import talentoTech.Project.Entidades.PedidoRequest;
 import talentoTech.Project.Entidades.productos.Producto;
 import talentoTech.Project.Entidades.users.Cliente;
 
@@ -13,4 +14,5 @@ public interface IPedidoService extends OperationalCRUD<Pedido, PedidoDTO> {
     public List<Producto> getAllProducts(long id);
     public List<Producto> localizarProductos(List<Long> productosIds)  throws Exception;
     public Cliente localizarCliente(Long userId);
+    public Pedido crearPedido(PedidoRequest pedidoRequest) throws Exception;
 }

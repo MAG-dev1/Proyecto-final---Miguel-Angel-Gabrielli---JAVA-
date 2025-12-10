@@ -47,14 +47,7 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody PedidoRequest pedido) throws Exception{
-        List<Producto> procs = servicio.localizarProductos(pedido.productosIds()); 
-        Pedido p = Pedido
-        .builder()
-        .productos(procs)
-        .user(servicio.localizarCliente(pedido.userId()))
-        .build();
-
-        return ResponseEntity.ok(servicio.create(p));
+        return ResponseEntity.ok(servicio.create(servicio.crearPedido(pedido)));
     }
 
     @DeleteMapping("/{id}")

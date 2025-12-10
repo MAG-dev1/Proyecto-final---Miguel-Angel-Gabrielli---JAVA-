@@ -1,5 +1,6 @@
 package talentoTech.Project.services.servicios;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,8 +12,10 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.Data;
+import talentoTech.Project.Entidades.ItemPedido;
 import talentoTech.Project.Entidades.Pedido;
 import talentoTech.Project.Entidades.PedidoDTO;
+import talentoTech.Project.Entidades.PedidoRequest;
 import talentoTech.Project.Entidades.productos.Producto;
 import talentoTech.Project.Entidades.users.Cliente;
 import talentoTech.Project.Repository.PedidoRepository;
@@ -38,7 +41,7 @@ public class PedidoService implements IPedidoService {
     @Override
     public List<Producto> getAllProducts(long id){
         Optional<Pedido> p = repository.findById(id);
-        return p.get().getProductos();
+        return p.get().getListProductos();
     }
 
     @Override
@@ -86,24 +89,36 @@ public class PedidoService implements IPedidoService {
 
     @Override
     public List<Producto> localizarProductos(List<Long> productosIds) throws Exception{
-        return productosIds
-        .stream()
-        .map( (id) -> {
-
+        List<Producto> productos = new ArrayList<>();
+        for (Long id : productosIds) {
             Producto p = servicioProducto.getProducts(id);
-            if (p == null) {
-                throw new RuntimeException("no existe un producto con id" + id);
-            }
-
-            return p;
-        
-        })
-        .toList();
+            if (p == null){
+                throw new RuntimeException("No existe ese id");
+            } 
+            productos.add(p);
+        }
+        return productos;
         
     }
 
     @Override
     public Cliente localizarCliente(Long userId) {
         return servicioUsuario.obtenerCliente(userId);
+    }
+
+    public Pedido crearPedido(PedidoRequest pedidoRequest) throws Exception{
+
+        List<Producto> procs = localizarProductos(pedidoRequest.productosIds());
+        Pedido p = Pedido
+            .builder()
+            .user(localizarCliente(pedidoRequest.userId()))
+            .fechaCreacion(LocalDate.now())
+            .fechaEntrega(LocalDate.parse(pedidoRequest.fechaEntrega()))
+            .estado("PENDIENTE")
+            .build();
+        
+        p.crearItems(procs, pedidoRequest.cants());
+        return p;
+
     }
 }

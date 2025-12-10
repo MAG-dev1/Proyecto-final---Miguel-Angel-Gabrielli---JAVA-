@@ -36,8 +36,6 @@ public abstract class Producto{
     private String color;
     private Integer quality; // 1, 2 and 3
 
-   @ManyToMany(mappedBy = "productos")
-    private List<Pedido> pedidos;
 
      public abstract ProductoDTO toDTO();
    
