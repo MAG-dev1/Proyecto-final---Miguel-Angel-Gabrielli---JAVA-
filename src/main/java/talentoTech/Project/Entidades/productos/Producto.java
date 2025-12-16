@@ -14,7 +14,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
-import talentoTech.Project.Entidades.Pedido;
+import talentoTech.Project.Entidades.pedido.Pedido;
 import talentoTech.Project.Entidades.users.UsuarioDTO;
 
 

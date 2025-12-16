@@ -2,9 +2,9 @@ package talentoTech.Project.services.interfaces;
 
 import java.util.List;
 
-import talentoTech.Project.Entidades.Pedido;
-import talentoTech.Project.Entidades.PedidoDTO;
-import talentoTech.Project.Entidades.PedidoRequest;
+import talentoTech.Project.Entidades.pedido.Pedido;
+import talentoTech.Project.Entidades.pedido.PedidoDTO;
+import talentoTech.Project.Entidades.pedido.PedidoRequest;
 import talentoTech.Project.Entidades.productos.Producto;
 import talentoTech.Project.Entidades.users.Cliente;
 

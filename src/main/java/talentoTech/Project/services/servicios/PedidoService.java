@@ -12,10 +12,10 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.Data;
-import talentoTech.Project.Entidades.ItemPedido;
-import talentoTech.Project.Entidades.Pedido;
-import talentoTech.Project.Entidades.PedidoDTO;
-import talentoTech.Project.Entidades.PedidoRequest;
+import talentoTech.Project.Entidades.pedido.ItemPedido;
+import talentoTech.Project.Entidades.pedido.Pedido;
+import talentoTech.Project.Entidades.pedido.PedidoDTO;
+import talentoTech.Project.Entidades.pedido.PedidoRequest;
 import talentoTech.Project.Entidades.productos.Producto;
 import talentoTech.Project.Entidades.users.Cliente;
 import talentoTech.Project.Repository.PedidoRepository;

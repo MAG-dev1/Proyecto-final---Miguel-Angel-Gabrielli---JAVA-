@@ -1,4 +1,4 @@
-package talentoTech.Project.Entidades;
+package talentoTech.Project.Entidades.pedido;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import talentoTech.Project.Entidades.IGenericDTO;
 import talentoTech.Project.Entidades.productos.Producto;
 import talentoTech.Project.services.servicios.PedidoService;
 

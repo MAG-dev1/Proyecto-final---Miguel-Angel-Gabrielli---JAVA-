@@ -1,4 +1,4 @@
-package talentoTech.Project.Entidades;
+package talentoTech.Project.Entidades.pedido;
 
 import lombok.Builder;
 import talentoTech.Project.Entidades.productos.Producto;
